@@ -1,9 +1,14 @@
 extends Area2D
 
+#load and score pellet scene
+@export var pellet_scene : PackedScene #= load("res://pellet.tscn")
 signal hit
 
 @export var speed = 400
 var screen_size
+
+#shoot pellet to left by default
+var pellet_velocity = Vector2(400,0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -23,9 +28,16 @@ func _process(delta: float) -> void:
 		velocity.y += 1
 	if(Input.is_action_pressed("move_up")):
 		velocity.y -= 1
+	if(Input.is_action_pressed("shoot")):
+		#if cooldown expired and player isn't hidden (isn't dead)
+		if ($cooldown.time_left == 0 && is_visible_in_tree()):
+			$cooldown.start()
+			shoot()
 
 	if(velocity.length() > 0):
 		velocity = velocity.normalized() * speed
+		#send pellet in the direction player last moved.
+		pellet_velocity = velocity
 		$AnimatedSprite2D.play()
 	else:
 		$AnimatedSprite2D.stop()
@@ -42,6 +54,18 @@ func _process(delta: float) -> void:
 	if velocity.y != 0:
 		$AnimatedSprite2D.animation = "up"
 		$AnimatedSprite2D.flip_v = velocity.y > 0
+
+func shoot():
+	var new_pellet = pellet_scene.instantiate()
+	var pellet_position = position
+	
+	#set position and velocity of pellet
+	new_pellet.position = pellet_position
+	new_pellet.linear_velocity = pellet_velocity
+	
+	#parent is main scene.
+	#if we add to player then position is messed up.
+	get_parent().add_child(new_pellet)
 
 func start(pos):
 	position = pos

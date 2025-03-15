@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwie0ilsdj7ku"]
+
+[ext_resource type="Script" uid="uid://qvryfqidnyjx" path="res://pellet.gd" id="1_cesqr"]
+[ext_resource type="Texture2D" uid="uid://drxsjnmcmxotw" path="res://art/playerGrey_up1.png" id="2_nf1bb"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rjg8u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_nf1bb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g4lw6"]
+
+[node name="Pellet" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 2
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_cesqr")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 3)
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_rjg8u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_g4lw6")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="child_entered_tree" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_child_entered_tree"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

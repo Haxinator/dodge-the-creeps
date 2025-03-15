@@ -3,8 +3,6 @@ extends RigidBody2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var mob_types = Array($AnimatedSprite2D.sprite_frames.get_animation_names())
-	$AnimatedSprite2D.animation = mob_types.pick_random()
 	$AnimatedSprite2D.play()
 
 
@@ -14,11 +12,10 @@ func _process(delta: float) -> void:
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	#free up memory (deletes node)
+	#delete pellet free memory
 	queue_free()
 
 
 func _on_body_entered(body: Node) -> void:
-	#delete mob (used for pellet)
-	#pellet is mask 3, mob searches for collisions with objects on that layer.
+	#on contact with something delete pellet
 	queue_free()
