@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=3 uid="uid://dwie0ilsdj7ku"]
 
 [ext_resource type="Script" uid="uid://qvryfqidnyjx" path="res://pellet.gd" id="1_cesqr"]
-[ext_resource type="Texture2D" uid="uid://drxsjnmcmxotw" path="res://art/playerGrey_up1.png" id="2_nf1bb"]
+[ext_resource type="Texture2D" uid="uid://8opsvjmf775b" path="res://art/pellet.png" id="2_cesqr"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rjg8u"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_nf1bb")
+"texture": ExtResource("2_cesqr")
 }],
 "loop": true,
 "name": &"default",
@@ -26,8 +26,8 @@ script = ExtResource("1_cesqr")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 3)
-scale = Vector2(0.2, 0.2)
+position = Vector2(0, 5)
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_rjg8u")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

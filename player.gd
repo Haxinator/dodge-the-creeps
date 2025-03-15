@@ -63,6 +63,13 @@ func shoot():
 	new_pellet.position = pellet_position
 	new_pellet.linear_velocity = pellet_velocity
 	
+	if pellet_velocity.y != 0:
+		new_pellet.get_node("AnimatedSprite2D").flip_v = pellet_velocity.y > 0
+	if pellet_velocity.x > 0:
+		new_pellet.rotation += PI/2
+	if pellet_velocity.x < 0:
+		new_pellet.rotation -= PI/2
+	
 	#parent is main scene.
 	#if we add to player then position is messed up.
 	get_parent().add_child(new_pellet)
